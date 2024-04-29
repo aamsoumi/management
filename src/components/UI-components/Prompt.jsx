@@ -26,11 +26,12 @@ function Prompt(Props) {
   const handleSave = (event) => 
   {  
     const inputElement = document.getElementById('exampleForm.ControlInput1'); 
+    console.log(Props.groupsAvailable.includes(inputElement.value))
     // check if the group is not empty and if already exists
     if (inputElement.value === '') {
       alert('Please enter a group name');
     }
-    else // if  not empty check if the goup already exists
+    else // if  not empty check if the group already exists
     {
       if (Props.groupsAvailable.includes(inputElement.value)) 
       {

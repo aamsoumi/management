@@ -8,7 +8,7 @@ export default function DocumentCard({infoProp,isSelected, setSelectedPapers}) {
    // const [groups, setGroups] = useState([]);
 
     useEffect(() => {
-      //  setGroups(infoProp.Groups);   
+    
     }, [infoProp])
 
     return (
