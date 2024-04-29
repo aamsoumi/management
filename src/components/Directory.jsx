@@ -4,9 +4,13 @@ import { useState,useRef } from 'react';
 import papersFile from "../data/papersFile.json";
 import DocumentCard from "../components/UI-components/DocumentCard";
 import { Container, Row, Col, Form,Button } from 'react-bootstrap';
-
 import Prompt from './UI-components/Prompt';
 import PromptAppend from './UI-components/PropmtAppend';
+
+// 
+import { API_URL } from './../../config.js';
+
+
 
 // I make sure that only 1 group is in all Groups for the papers: only "All"
 export default function Directory() 
@@ -31,8 +35,24 @@ export default function Directory()
 
 
   useEffect(() => {
-    papersFile.data.forEach(p=>p['Groups']=['All'])
-    setPaper([...papersFile.data])
+
+    const fetchData = async () => {
+      try{
+        const response = await fetch('../data/papersFile.json');
+        const data = await response.json();
+        setPaper([...data.data])
+      }
+      catch(e){
+        papersFile.data.forEach(p=>p['Groups']=['All'])
+        setPaper([...papersFile.data])
+      }
+    }
+
+
+
+
+
+   
   },[])
 
   // Function to handle group change
