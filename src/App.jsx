@@ -1,6 +1,5 @@
 // App.js
 import React, { useState } from 'react';
-import DirectoryDev from './components/DirectoryDev';
 import Directory from './components/Directory';
 import Groups from './components/Groups';
 import './bootstrap.css';
