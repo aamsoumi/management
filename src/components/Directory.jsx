@@ -10,9 +10,9 @@ import Visualization from './Visualization';
 
 
 // 
-import { API_URL } from './../../config.js';
+// import { API_URL } from './../../config.js';
 
-
+const API_URL = "http://127.0.0.1:5050"
 
 // I make sure that only 1 group is in all Groups for the papers: only "All"
 export default function Directory() 
@@ -36,32 +36,6 @@ export default function Directory()
   useEffect(() => {
   },[selectedPapers])
 
-/*
-JournalTitle
-: 
-"Physiologia plantarum"
-Keywords
-: 
-"[]"
-Kmeans_Cluster
-: 
-"3"
-Month
-: 
-""
-PCA_Comp1
-: 
-"-2.8318"
-PCA_Comp2
-: 
-"3.6582"
-Year
-: 
-""
-articleID
-: 
-"36437708"
-*/
 
   useEffect(() => {
     const fetchData = async () => {
