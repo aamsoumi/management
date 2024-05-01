@@ -1,28 +1,26 @@
 import React, { useState, useEffect,useRef } from "react";
 import * as d3 from "d3";
-import ScatterPlot from "./js/Scatterplot";
-
+//import ScatterPlot from "./js/Scatterplot";
+import ScatterPlotComp from "./js/ScatterplotComp";
 import papersFile from "../data/papersFile.json";
-export default function Visualization() {
+export default function Visualization(Props) {
 
-    const [data, setData] = useState([]);
     const svgRef = useRef();
 
     useEffect(() => {
-        setData(papersFile.data);
-        if(data.length>0)
-        {
             const svg = d3.select(svgRef.current)
-            ScatterPlot(data,svg)
-        }
-        else{
-         
-        }
-          },[data])
+            ScatterPlotComp({
+                axis:svg,
+                plotData:Props.data,
+                selectedPapers:Props.selectedPapers ,
+                setSelectedPapers:Props.setSelectedPapers
+            })
+    
+          },[])
 
     return (
         <div>
-            <svg width="700" height="700" viewBox ="0 0 1000 1000" ref={svgRef}>
+            <svg width="700" height="700" viewBox ="0 0 1000 600" ref={svgRef}>
             </svg>
         </div>
     )   }

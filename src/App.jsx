@@ -1,13 +1,18 @@
 // App.js
 import React, { useState } from 'react';
+import DirectoryDev from './components/DirectoryDev';
 import Directory from './components/Directory';
+import Groups from './components/Groups';
 import './bootstrap.css';
 import Navigation from './components/Nav/Navigation';
 import './App.css';
 import Visualization from './components/Visualization';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Layout from './components/Layout';
-import Home from './components/Home';
+
+
+
+
+
 const App = () => {
   return (
  <div>
@@ -16,6 +21,7 @@ const App = () => {
  <Routes>
     <Route path="/" element={<Directory />} />
     <Route path="/Documents" element={<Directory />} />
+    <Route path="/Groups" element={<Groups />} />
     <Route path="/Visualization" element={<Visualization />} />
     </Routes>
  </BrowserRouter>

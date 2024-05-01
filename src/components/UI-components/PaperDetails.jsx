@@ -1,34 +1,21 @@
 import React from 'react';
 import {useState} from 'react';
 import { Card, Container, Row, Col , Collapse,Form, Button} from 'react-bootstrap';
-
-const Groups = ['Group A', 'Group B', 'Group C']; // List of groups
+import Spinner from 'react-bootstrap/Spinner';
+import Badge from 'react-bootstrap/Badge';
 
 const MAX_LENGTH = 100; // Maximum characters to show initially
 
 
 function PaperDetails({ articleID,title, abstract, authors, journal, year,isSelected,setSelectedPapers,groups}) {
 
+  
+  
 
-
-/* I have taken this part off because it is not being used
-
-              <select
-                className="form-select"
-                value={selectedGroup}
-                onChange={onGroupChange}>
-                
-                {Groups.map((group) => (
-                  <option key={group} value={group}>
-                    {group}
-                  </option>
-                ))}
-
-              </select>
-*/
-
-
-    
+if(articleID === undefined || title === undefined || abstract === undefined )
+{
+  return <Spinner animation="grow" />;
+}    
 
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -74,7 +61,7 @@ function PaperDetails({ articleID,title, abstract, authors, journal, year,isSele
         <Row>
             <Col>
             {groups.map((group,i) => (
-                  <Button variant="success" className='m-1' key={i}>{group}</Button>
+                  <Badge pill variant="success" className='m-1' key={i}>{group}</Badge>
                 ))}
 
             </Col>

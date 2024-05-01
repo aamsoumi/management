@@ -2,24 +2,23 @@
 import React, { useEffect } from 'react';
 import { useState,useRef } from 'react';
 import papersFile from "../data/papersFile.json";
-import DocumentCard from "../components/UI-components/DocumentCard";
+import DocumentCard from "./UI-components/DocumentCard.jsx";
 import { Container, Row, Col, Form,Button } from 'react-bootstrap';
-import Prompt from './UI-components/Prompt';
-import PromptAppend from './UI-components/PropmtAppend';
-import Visualization from './Visualization';
-
-
+import Prompt from './UI-components/Prompt.jsx';
+import PromptAppend from './UI-components/PropmtAppend.jsx';
+import Visualization from './Visualization.jsx';
 // 
-import { API_URL } from './../../config.js';
+import { API_URL } from '../../config.js';
 
 
 
 // I make sure that only 1 group is in all Groups for the papers: only "All"
-export default function Directory() 
+export default function DirectoryDev() 
 {
+  let paper_=[]
 
   // States for the application 
-  const [groupsAvailable,setGroupsAvailable] = useState([]);
+  const [groupsAvailable,setGroupsAvailable] = useState( []);
   const [selectedGroup, setSelectedGroup] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
   const [displayedTerms, setDisplayedTerms] = useState([]);
@@ -27,56 +26,30 @@ export default function Directory()
   const [newGroupName, setNewGroupName] = useState('');
   const [updateGroups, setUpdateGroups] = useState(false);
   const [paper , setPaper] = useState([]);
-  const filteredPapers = useRef([]);
+
+  const [filteredPapers, setFilteredPapers] = useState([]);
+
+
 
   // References for the UI
   const buttonTextToggle  = useRef(null);
   let previousPaper = useRef(null);
 
   useEffect(() => {
+    console.log("selectedPapers: ",selectedPapers)
   },[selectedPapers])
 
-/*
-JournalTitle
-: 
-"Physiologia plantarum"
-Keywords
-: 
-"[]"
-Kmeans_Cluster
-: 
-"3"
-Month
-: 
-""
-PCA_Comp1
-: 
-"-2.8318"
-PCA_Comp2
-: 
-"3.6582"
-Year
-: 
-""
-articleID
-: 
-"36437708"
-*/
 
   useEffect(() => {
     const fetchData = async () => {
       const dataSource = `${API_URL}/data`;
       try {
         const response = await fetch(dataSource);
+
         let data = await response.json();
-        const results =data.data.map(p => {
-          return {...p, 
-            PCA_Comp1:+p.PCA_Comp1,
-            PCA_Comp2:+p.PCA_Comp2,
-            Kmeans_Cluster:+p.Kmeans_Cluster,
-            Groups:p.Groups.slice(1,p.Groups.length-1).split(",")}
-        });
-        setPaper([...results]);
+        
+        setFilteredPapers([...data.data1]);
+        setPaper([...data.data]);
       } catch (e) {
         console.log(e);
         papersFile.data.forEach(p => (p['Groups'] = ['All']));
@@ -87,7 +60,7 @@ articleID
   }, []);
   
   useEffect(() => {
-    //console.log(paper)
+    console.log(paper)
   }, [paper]); // Add paper as a dependency
   
 
@@ -112,51 +85,44 @@ articleID
       setSelectedPapers(displayedTerms);
     }};
    
-// Filter papers based on search terms
-
-if (searchTerm.length > 0) {
-  filteredPapers.current = 
-    [...paper.filter(paper =>
-      (paper.ArticleTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      paper.Abstract.toLowerCase().includes(searchTerm.toLowerCase()))
-  )]
-} else {
-  
-  filteredPapers.current = [...paper];
-}
+useEffect(() => {
+  // Your filtering logic goes here
+  let updatedFilteredPapers = [];
+  if (searchTerm.length > 0) {
+    updatedFilteredPapers = paper.filter((paper) =>
+      paper.ArticleTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      paper.Abstract.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  } else {
+    updatedFilteredPapers = [...paper];
+  }
+  setFilteredPapers(updatedFilteredPapers);
+}, [selectedGroup, searchTerm, paper]); // Add dependencies
 
 
 // Filter papers based on selected group
+
+
     useEffect(() => {
-      setDisplayedTerms(filteredPapers.current.map(p => p.articleID));
+      setDisplayedTerms(filteredPapers.map(p => p.articleID));
     }, [selectedGroup, searchTerm]);
 
     // Filter papers based on selected papers
+
+
     useEffect(() => {
     }, [selectedPapers]);
 
     // Create new group
     useEffect(() => {
-      
-      let tempGroups = []
-        if(paper&&paper.length>0){
-          paper.forEach(p => {
-            p.Groups.forEach(g => {
-              tempGroups.push(g.trim())
-            })
-          })
-        setGroupsAvailable(Array.from(new Set([...groupsAvailable, ...tempGroups])));}
-      
-        
-       },[paper]);;
+      if(groupsAvailable.length === 0)
+        groupsAvailable.push('All','Computer Science','Covid19','Physics');
+       },[]);;
 
     useEffect(() => {
       
     }, [newGroupName]);
 
-    useEffect(() => {
-      console.log(groupsAvailable)
-    },[groupsAvailable])
 
     const handleCreateNewGroup = () => {
       // Step 1: Add the group to the available groups
@@ -193,7 +159,7 @@ if (searchTerm.length > 0) {
     // Add a useEffect hook to perform actions after the state has been updated
     useEffect(() => {
       try{
-        //console.log(paper[0].Groups); // This will log the updated paper state
+        console.log(paper[0].Groups); // This will log the updated paper state
       }
         catch(e){
           //console.log(e)
@@ -214,27 +180,21 @@ if (searchTerm.length > 0) {
 
 
 
-console.log(groupsAvailable)
+
 return (
   <>
-  
+   
   <Container fluid="md">
     <Row>
       <Col className='col-4'>
-      
         <Form.Group>
           <Form.Label>Select Group:</Form.Label>
-          {groupsAvailable && groupsAvailable.length > 0 && 
-          (
-               <Form.Control as="select" value={selectedGroup} onChange={handleGroupChange}>
-                  {
-                    groupsAvailable.map(group => (
-                    <option key={group} value={group}>{group}</option>
-                    ))}
-                  </Form.Control>
-          )}
+          <Form.Control as="select" value={selectedGroup} onChange={handleGroupChange}>
+            {groupsAvailable.map(group => (
+              <option key={group} value={group}>{group}</option>
+            ))}
+          </Form.Control>
         </Form.Group>
-
         <Form.Group>
           <Form.Label>Search:</Form.Label>
           <Form.Control type="text" placeholder="Search..." value={searchTerm} onChange={handleSearchTermChange} />
@@ -254,7 +214,6 @@ return (
     <Row style={{marginTop:"20px", marginBottom:"20px"}}>
       <Col>
                 <Button className="me-2" onClick={handleSelectAll} ref={buttonTextToggle}>Select All</Button>
-                {groupsAvailable && groupsAvailable.length > 0 && (
                 <Prompt
                       title="Enter new group name:"
                       inputPlaceholder="New Group Name"
@@ -265,9 +224,9 @@ return (
                       groupsAvailable={groupsAvailable}
                       setGroupsAvailable={setGroupsAvailable}
                       appendToGroup={appendToGroup}
-                      />)}
-                   {groupsAvailable && groupsAvailable.length > 0 && (    
+                      />
                 <PromptAppend  
+                
                   title="Append to an Existing Group" 
                   buttonTitle="Append to an Existing Group" 
                   selectedPapers={selectedPapers} 
@@ -275,15 +234,14 @@ return (
                   groupsAvailable={groupsAvailable}
                   appendToGroup={appendToGroup}
                    />
-                   )}
                    <Button className="me-2" onClick={handleSaveToDatabase}>Save to Database</Button>
                 
       </Col>
     </Row>
     <Row>
       <Col>
-        {filteredPapers.current.map((paper) => { 
-          
+        {filteredPapers.map((p) => { 
+          console.log(paper)
           return <DocumentCard 
                   key={paper.articleID} 
                   infoProp={paper} 

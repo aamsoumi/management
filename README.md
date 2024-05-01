@@ -1,12 +1,7 @@
-<<<<<<< HEAD
-# management
-=======
-# React + Vite
+# Document Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The system is a react application with flask back end, that aims to cluster the documents based on their abstract and title information. Bert is used for finding the embeddings of the documents and then cosine similarity is used to generate the network connections.
 
-Currently, two official plugins are available:
+The clustering is also done based on the KMeans on bert vectors.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
->>>>>>> 7a5a6d1 (ver 1)
+<img src="./imgs/Website.png">

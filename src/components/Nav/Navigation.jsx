@@ -13,8 +13,9 @@ function Navigation() {
           <Nav className="me-auto">
             <Nav.Link href="#home">Home</Nav.Link>
             <Nav.Link href="/Documents">Documents</Nav.Link>
+            <Nav.Link href="/Groups">Group Management</Nav.Link>
             <Nav.Link href="/Visualization">Visualization</Nav.Link>
-            <NavDropdown title="Documents" id="basic-nav-dropdown">
+            <NavDropdown title="Data" id="basic-nav-dropdown">
               <NavDropdown.Item href="/Documents/PCA">PCA</NavDropdown.Item>
               <NavDropdown.Item href="/Documents/Network">
                 Network of the Documents
