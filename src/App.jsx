@@ -7,7 +7,7 @@ import Navigation from './components/Nav/Navigation';
 import './App.css';
 import Visualization from './components/Visualization';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
+import config from './config';
 
 
 
