@@ -44,11 +44,17 @@ export default function Directory()
         const response = await fetch(dataSource);
         let data = await response.json();
         const results =data.data.map(p => {
+
+          const grpTemp = p.Groups.slice(1,p.Groups.length-1).split(",")
+          grpTemp.forEach((g,i) => {
+            return grpTemp[i] = g.replace(/'/g, "").replace(/"/g, "").trim()
+          })
+
           return {...p, 
             PCA_Comp1:+p.PCA_Comp1,
             PCA_Comp2:+p.PCA_Comp2,
             Kmeans_Cluster:+p.Kmeans_Cluster,
-            Groups:p.Groups.slice(1,p.Groups.length-1).split(",")}
+            Groups:grpTemp}
         });
         setPaper([...results]);
       } catch (e) {
@@ -129,7 +135,7 @@ if (searchTerm.length > 0) {
     }, [newGroupName]);
 
     useEffect(() => {
-      console.log(groupsAvailable)
+      //console.log(groupsAvailable)
     },[groupsAvailable])
 
     const handleCreateNewGroup = () => {
@@ -187,8 +193,22 @@ if (searchTerm.length > 0) {
     }
 
 
+    const removeGroupFromPaper = (article_id,groupIndex) => {
+      console.log(article_id,groupIndex)
 
-console.log(groupsAvailable)
+      const updatedPaper = paper.map(p => {
+        if (p.articleID === article_id) {
+          console.log(p,groupIndex)
+          return { ...p, Groups: p.Groups.filter((g,i) => i !== groupIndex) };
+        }
+        return p;
+    
+      })
+      console.log(updatedPaper)
+      setPaper([...updatedPaper]);
+    }
+
+
 return (
   <>
   
@@ -264,6 +284,7 @@ return (
                   isSelected={selectedPapers.includes(paper.articleID)} 
                   selectedPapers={selectedPapers}
                   setSelectedPapers={setSelectedPapers}
+                  removeGroupFromPaper={removeGroupFromPaper}
                   />
         })}
       </Col>

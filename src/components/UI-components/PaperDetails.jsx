@@ -2,15 +2,18 @@ import React from 'react';
 import {useState} from 'react';
 import { Card, Container, Row, Col , Collapse,Form, Button} from 'react-bootstrap';
 import Spinner from 'react-bootstrap/Spinner';
+import CloseButton from './CloseButton.jsx';
+
+
+// the close button for the badge of the group
 import Badge from 'react-bootstrap/Badge';
+import "./PaperDetails.css";
+
 
 const MAX_LENGTH = 100; // Maximum characters to show initially
 
 
-function PaperDetails({ articleID,title, abstract, authors, journal, year,isSelected,setSelectedPapers,groups}) {
-
-  
-  
+function PaperDetails({ articleID,title, abstract, authors, journal, year,isSelected,setSelectedPapers,groups,removeGroupFromPaper}) {
 
 if(articleID === undefined || title === undefined || abstract === undefined )
 {
@@ -60,9 +63,16 @@ if(articleID === undefined || title === undefined || abstract === undefined )
         </Row>
         <Row>
             <Col>
-            {groups.map((group,i) => (
-                  <Badge pill variant="success" className='m-1' key={i}>{group}</Badge>
-                ))}
+            {groups.map((group,i) => 
+            (
+              <div key={i}>
+              <Badge className='m-1 group-badge' variant="primary">
+                  {group}
+              </Badge>
+              <CloseButton onClick={() => removeGroupFromPaper(articleID,i)} />
+              </div>
+        
+            ))}
 
             </Col>
         </Row>

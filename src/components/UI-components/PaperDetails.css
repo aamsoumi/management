@@ -1,0 +1,19 @@
+.badge-with-close {
+    position: relative;
+  }
+
+  .btn-x {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    padding: 1px;
+    top: -5px; /* Adjust top value to align it properly */
+    right: 10px; /* Adjust right value to align it properly */
+    cursor: pointer;
+    color: orange;
+    background-color: white;
+    border-radius: 50%;
+  }
+  .group-badge {
+    border-radius: 5px;
+  }
