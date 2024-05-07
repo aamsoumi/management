@@ -118,6 +118,8 @@ export default function Groups()
   }
 
 
+
+  
   const handleSaveToDatabase = () => {
     // Update the database with the current paper state
     fetch(`${config.serverUrl}/update_paper`, {

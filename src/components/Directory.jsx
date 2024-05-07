@@ -247,8 +247,14 @@ return (
     </Row>
     <Row style={{marginTop:"20px", marginBottom:"20px"}}>
       <Col>
-                <Button className="me-2" onClick={handleSelectAll} ref={buttonTextToggle}>Select All</Button>
-                {groupsAvailable && groupsAvailable.length > 0 && (
+                <Button className="me-2" onClick={handleSelectAll} 
+                        ref={buttonTextToggle}>
+                        Select All
+                </Button>
+
+                {groupsAvailable && 
+                groupsAvailable.length > 0 && 
+                (
                 <Prompt
                       title="Enter new group name:"
                       inputPlaceholder="New Group Name"
@@ -259,7 +265,8 @@ return (
                       groupsAvailable={groupsAvailable}
                       setGroupsAvailable={setGroupsAvailable}
                       appendToGroup={appendToGroup}
-                      />)}
+                      />)
+                      }
                    {groupsAvailable && groupsAvailable.length > 0 && (    
                 <PromptAppend  
                   title="Append to an Existing Group" 
