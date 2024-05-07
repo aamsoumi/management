@@ -2,8 +2,8 @@ from flask import Flask, send_from_directory,request
 from flask import jsonify
 
 import sqlite3
-from sklearn.decomposition import PCA
-from analysis.bert_cluster import get_embeddings
+#from sklearn.decomposition import PCA
+#from analysis.bert_cluster import get_embeddings
 import json
 
 from flask_cors import CORS
