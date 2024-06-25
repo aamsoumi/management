@@ -5,9 +5,6 @@ import { useState } from "react";
 import PaperDetails from "./PaperDetails";
 export default function DocumentCard({infoProp,isSelected,SelectedPapers, setSelectedPapers,removeGroupFromPaper}) {
 
-   // const [groups, setGroups] = useState([]);
-   console.log(infoProp)
-
     useEffect(() => {
     
     }, [infoProp])

@@ -6,17 +6,23 @@ import papersFile from "../data/papersFile.json";
 export default function Visualization(Props) {
 
     const svgRef = useRef();
+    const [filteredPapers, setFilteredPapers] = useState([]);
+    useEffect(() => {
+        
+        setFilteredPapers(Props.filteredPapers.current.map(d=>d.articleID))
 
+    },[Props.filteredPapers.current])    
     useEffect(() => {
             const svg = d3.select(svgRef.current)
             ScatterPlotComp({
                 axis:svg,
                 plotData:Props.data,
                 selectedPapers:Props.selectedPapers ,
-                setSelectedPapers:Props.setSelectedPapers
+                setSelectedPapers:Props.setSelectedPapers,
+                filteredPapers:filteredPapers
             })
     
-          },[])
+          },[filteredPapers])
 
     return (
         <div>

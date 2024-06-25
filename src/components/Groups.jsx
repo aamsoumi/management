@@ -1,8 +1,9 @@
 // Directory.js
+import config from '../config.jsx';
+
 import React, { useEffect,useState,useRef  } from 'react';
 import DocumentCard from "./UI-components/DocumentCard.jsx";
 import { Container, Row, Col, Form,Button } from 'react-bootstrap';
-import config from '../config.jsx';
 import Accordion from 'react-bootstrap/Accordion';
 import PaperCard from "./UI-components/Groups/PaperCard.jsx";
 import LogicGroupOperation from "./UI-components/Groups/LogicGroupOperation.jsx";

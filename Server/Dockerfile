@@ -1,5 +1,5 @@
-# Use official Python image as base image
-FROM python:3.11
+# Use ARM-compatible Python image as base image
+FROM arm64v8/python:3.11
 
 # Set working directory
 WORKDIR /app

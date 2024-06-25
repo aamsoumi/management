@@ -1,3 +1,4 @@
 export default {
-    serverUrl: 'http://127.0.0.1:5050',
+    //serverUrl: 'http://localhost:5050',
+    serverUrl: "https://document-management-arm4.onrender.com",
   };

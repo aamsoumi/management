@@ -6,8 +6,9 @@ export default function ScatterPlotComp(Props)
 
 
     const data = [...Props.plotData];
-    
+    console.log("here is the filtered Papers",Props.filteredPapers)
     const axis = Props.axis
+    axis.selectAll("*").remove()
     const title="Papers";
     const xCol="PCA_Comp1";
     const yCol="PCA_Comp2";
@@ -50,6 +51,18 @@ export default function ScatterPlotComp(Props)
     })
     .attr('transform', d=>`translate(${xScale(d[xCol])}, ${yScale(d[yCol])})`)
     .append('circle')
+    .attr("opacity", d=>{
+      
+      if(Props.filteredPapers.includes(d.articleID))
+      {
+        return 1
+      }
+      else
+      {
+        return 0.2
+      }
+        })
+
     .attr("class", (d,i)=>`cls_${i} ${d[colorCol]}`)
   
     //.attr("id", (d,i)=>`id_${i} ${d[colorCol]}`)
